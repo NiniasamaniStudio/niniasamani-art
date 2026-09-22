@@ -14,9 +14,10 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { categoryFilters, products, type Product } from "@/data/products";
 import { services } from "@/data/services";
+import { getPublicProducts } from "@/lib/products";
 
 const whatsappNumber = "995555123456";
 const whatsappLink = (message: string) => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -27,8 +28,19 @@ export default function StudioApp() {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState(0);
+  const [catalogProducts, setCatalogProducts] = useState(products);
 
-  const visibleProducts = activeCategory === "all" ? products : products.filter((product) => product.category === activeCategory);
+  useEffect(() => {
+    let active = true;
+    getPublicProducts().then((remoteProducts) => {
+      if (active) setCatalogProducts(remoteProducts);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const visibleProducts = activeCategory === "all" ? catalogProducts : catalogProducts.filter((product) => product.category === activeCategory);
 
   const openQuote = (service = "") => {
     setQuoteOpen(true);
