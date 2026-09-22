@@ -14,7 +14,7 @@ export const services: Service[] = [
     title: "ტანსაცმლის გადაკეთება",
     description: "სილუეტის მორგება, შეკეთება და ახალი დეტალების დამატება.",
     price: "₾ 45-დან",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1000&q=85",
+    image: "/service.jpg",
   },
   {
     id: "bags",
